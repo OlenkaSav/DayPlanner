@@ -1,0 +1,11 @@
+.bg__wrapper{
+    column-count: 2;
+    column-gap: 20px;
+}
+.bg__wrapper div {
+  break-inside: avoid-column; /* Это свойство предотвращает перенос элемента на следующую колонку */
+  page-break-inside: avoid; /* Дополнительная поддержка для некоторых браузеров */
+}
+.bg__minutes{
+    height: 1px;
+}

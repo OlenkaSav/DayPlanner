@@ -1,0 +1,70 @@
+/* 1.1	Theme Reset Style */
+html {
+    font-size: $base-font-size + px;
+    font-family: var(--base-font);
+}
+
+:root {
+    scroll-behavior: unset;
+}
+
+
+
+img {
+    max-width: 100%;
+    width: auto;
+    height: auto;
+}
+
+body {
+    font-family: $base-font;
+    color: $body-color;
+    background-color: $body-bg-color;
+    font-size: 15px;
+    overflow-x: unset;
+    // font-size: calc-rem-value(15);
+
+  
+}
+
+p {
+    font-size: 16px;
+    color: $body-color;
+    line-height: 1.8em;
+    // margin: 0;
+    
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: $heading-color;
+    font-family: $heading-font;
+}
+
+ul {
+    padding-left: 0;
+    margin: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    // @include transition-time(0.2s);
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.container{
+    max-width: 1200px;
+    margin: auto;
+    padding: 15px;
+}
+
+
+
