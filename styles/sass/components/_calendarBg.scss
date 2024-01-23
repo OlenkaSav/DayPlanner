@@ -1,11 +1,50 @@
 .bg__wrapper{
-    column-count: 2;
-    column-gap: 20px;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(60, 1fr);
+  grid-auto-flow: column;
+  gap: 0 20px;
+    // column-count: 2;
+    // column-gap: 20px;
 }
-.bg__wrapper div {
-  break-inside: avoid-column; /* Это свойство предотвращает перенос элемента на следующую колонку */
-  page-break-inside: avoid; /* Дополнительная поддержка для некоторых браузеров */
-}
+
+
 .bg__minutes{
-    height: 1px;
+  display: flex;
+    height: 20px;
+    max-width: 550px;
 }
+.bg__sell{
+  max-width: 496px;
+  width: 100%;
+  display: flex;
+}
+.bg__span{
+  width: 40px;
+}
+.bg__div{
+  // border: 1px grey solid;
+  height: 100%;
+  background: darkblue;
+  width: 100%;
+  color: antiquewhite;
+  
+}
+.bg__div--event{
+  // border: 1px grey solid;
+background: green;
+height: 100%;
+width: 100%;
+color: antiquewhite;
+border-left: 3px solid red;
+
+}
+
+
+// .bg__wrapper .bg__minutes:nth-child(2),
+// .bg__wrapper .bg__minutes:nth-child(4) {
+//   // grid-row: span 3; /* Объединение на 2 колонки */
+//   background: red;
+//   grid-row: span 3;
+// }

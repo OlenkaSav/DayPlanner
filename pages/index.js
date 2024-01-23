@@ -10,7 +10,7 @@ const HomePage = (props) => {
     return (
         <div>
             <CalendarBg/>
-            <EventList/>
+            {/* <EventList/> */}
         </div>
     )
 };
