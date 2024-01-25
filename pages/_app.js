@@ -1,15 +1,7 @@
-
-// import "react-toastify/dist/ReactToastify.min.css";
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../styles/animate.css'
-
 import '../styles/sass/style.scss'
-// import {ToastContainer} from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Head from 'next/head'
-
 import {Open_Sans} from 'next/font/google'
 
 
@@ -35,7 +27,14 @@ function MyApp({Component, pageProps}) {
                     <title>Planner</title>
                 </Head>
                 <Component {...pageProps} />
-                {/* <ToastContainer/> */}
+                <ToastContainer position="top-center"
+                    autoClose={2000}
+                    hideProgressBar
+                    style={{ fontSize: '1.5rem' }} 
+                    closeOnClick
+                    rtl={false}
+                    draggable
+                    theme="light"/>
             </div>
     
 

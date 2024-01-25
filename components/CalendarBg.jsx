@@ -1,13 +1,17 @@
 import EventList from '@/components/EventList';
 import { useState, useEffect } from 'react';
 import Link from "next/link"
+import Loader from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"; 
 
 
 export default function CalendarBg() {
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const getEvents = async () => {
+            setLoading(true);
             try {
                 const res = await fetch("http://localhost:3001/api/events", { cache: "no-store" });
                 if (!res.ok) {
@@ -19,6 +23,7 @@ export default function CalendarBg() {
             } catch (error) {
                 console.error(error);
             }
+            setLoading(false);
         };
 
         getEvents();
@@ -49,7 +54,7 @@ export default function CalendarBg() {
        const events = data.filter(item => (item.start <= slot && (item.start + item.duration) > slot)).sort((a, b)=> a.start-b.start);
        
         const eventsFull = [...events];
-        console.log(eventsFull)
+        // console.log(eventsFull)
         events.map(event => {
             for (let i = 0; i < data.length; i++) {
                 if (event._id !== data[i]._id && slot < data[i].start && (event.start + event.duration) > data[i].start)
@@ -67,7 +72,7 @@ export default function CalendarBg() {
         if (!!events.length) {
             return (eventsFull.map(item => (item._id ?
                 (<Link key={item._id} href={`/editEvent/${item._id}`} className='bg__div--event'>
-                    <h2 style={{position: 'relative', zIndex: 20}}>{slot === item.start && item.title}</h2>
+                    <h2 style={{position: 'relative', zIndex: 20}} className='bg__div--title' >{slot === item.start && item.title}</h2>
                 </Link>)
             : (<div key={slot} className="bg__div"></div>)
             )));
@@ -92,7 +97,14 @@ export default function CalendarBg() {
     return (
         <>
             <div className="bg__wrapper">
-                
+                {loading && <Loader 
+                    type="Puff"
+                    color="#00BFFF"
+                    height={100} 
+                    width={100} 
+                    timeout={3000}  
+                    style={{position: 'absolute',  top: '500px'}}
+                />  }
                 
                 {layoutData.map((container) => (
                     <div key={container.key} className="bg__minutes">

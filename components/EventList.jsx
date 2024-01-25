@@ -25,7 +25,11 @@ export default function EventList() {
     return (
         <>
        {data.map(e => (
-            <Link key={e._id} href={`/editEvent/${e._id}`} className='event__item'>
+           <Link key={e._id}
+               href={`/editEvent/${e._id}`}
+            //    href=`/editEvent/[${e._id}]`
+            //    as={`/editEvent/${e._id}`}
+               className='event__item'>
                 <h2>{e.title}</h2>
             </Link>))}
        

@@ -3,7 +3,6 @@ import ToolsPanel from '@/components/ToolsPanel';
 import React, { useEffect } from 'react';
 import CalendarBg from '@/components/CalendarBg';
 
-
 const HomePage = (props) => {
     
 
