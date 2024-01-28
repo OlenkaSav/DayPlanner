@@ -29,33 +29,38 @@ export default function AddEvent() {
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
+      if ((start + duration) > 540) {
+        setDuration((prev) => {
+      const newDuration = 540 - start;
+      console.log(newDuration); // Новое значение
+      return newDuration;
+    });
+        }
         if (!title) {
             toast("Type something in title field...");
-        }
-        try {
-            const res = await fetch("http://localhost:3001/api/events/", {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json",
-                },
-                body: JSON.stringify({ title, start, duration })
-            });   
-            if (res.ok) {
-                router.push('/');
-            } else {
-                throw new Error("Failed to create an event")
+        } else {
+      
+            try {
+                const res = await fetch("http://localhost:3001/api/events/", {
+                    method: "POST",
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                    body: JSON.stringify({ title, start, duration })
+                });
+                if (res.ok) {
+                    router.push('/');
+                } else {
+                    throw new Error("Failed to create an event")
+                }
+            } catch (error) {
+                console.log(error)
             }
-        } catch (error) {
-           console.log(error) 
         }
     }
 
     const durationChange = (event) => {
-        let dur = event.target.value;
-        if ((start + dur) > 540) {
-            dur = 480 - start;
-        }
-        setDuration(dur);
+      setDuration(event.target.value);
     };
       const hoursChange = (event) => {
         setHours(event.target.value);
@@ -64,13 +69,14 @@ export default function AddEvent() {
         setMinutes(event.target.value);
     }; 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="form__container">
+            <h3 className='form__title'>Let's create event...</h3>
             <Box
-                // component="form"
                 sx={{
                     height: '44px',
                     width: '700px',
                     fontSize: '14px',
+                    marginBottom: '25px',
                 }}
                 noValidate
                 autoComplete="off"
@@ -80,15 +86,17 @@ export default function AddEvent() {
                     height: '44px',
                     width: '700px',
                     fontSize: '20px',
+                    
                     }}
                     onChange={(e) => setTitle(e.target.value)}
                     value={title}
                 />
             </Box>
-
+            <h4 className='form__title--params'>Change event duration</h4>
             <Slider
                 aria-label="Duration"
                 defaultValue={30}
+                value={duration}
                 onChange={durationChange}
                 valueLabelDisplay="auto"
                 step={5}
@@ -100,6 +108,7 @@ export default function AddEvent() {
                     fontSize: '20px',
                     }}
             />
+             <h4 className='form__title--params'>Select event start</h4>
               <FormControl sx={{ m: 1, minWidth: 80  }}>
                 <InputLabel id="demo-simple-select-autowidth-label">Hours</InputLabel>
                 <Select
@@ -112,7 +121,8 @@ export default function AddEvent() {
                     sx={{
                     width: '80px',
                     fontSize: '20px',
-                    marginRight: '10px'
+                    marginRight: '10px',
+                    height: '50px',
                     }}
                     
                 >
@@ -133,7 +143,7 @@ export default function AddEvent() {
                 autoWidth
                     label="Hours"
                     sx={{
-                    // height: '44px',
+                    height: '50px',
                     width: '80px',
                     fontSize: '20px',
                     marginRight: '10px'
@@ -146,8 +156,12 @@ export default function AddEvent() {
                         ))}
                 </Select>
             </FormControl>
+
+            <div className="buttons__container">
+                <Button variant="outlined" type="submit">Save event</Button>
+            </div>
      
-            <Button variant="outlined" type="submit">Save event</Button>
+            
 
       </form>
     );

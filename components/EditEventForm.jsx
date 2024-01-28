@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import RemoveBtn from './RemoveBtn';
 
 
+
 export default function EditEventForm({ event}) {
     
     const [newTitle, setNewTitle] = useState('');
@@ -21,6 +22,7 @@ export default function EditEventForm({ event}) {
     const [hours, setHours] = useState(8);
     const [minutes, setMinutes] = useState(0);
     const [newStart, setNewStart] = useState(0);
+    const [loading, setLoading] = useState(false);
   
     useEffect(() => {
         if (event) {
@@ -42,32 +44,37 @@ export default function EditEventForm({ event}) {
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
+        if ((newStart + newDuration) > 540) {
+            setNewDuration((prev) => {
+                const newDuration = 540 - newStart;
+                console.log(newDuration); 
+                return newDuration;
+            });
+        }
         if (!newTitle) {
             toast("Type something in title field...");
-        }
-        try {
-            const res = await fetch(`http://localhost:3001/api/events/${event._id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-type": "application/json",
-                },
-                body: JSON.stringify({ newTitle, newStart, newDuration })
-            });   
-            if (res.ok) {
-                router.push("/");
-            } else { throw new Error("Failed to update event"); }
+        } else {
+        
+            try {
+                const res = await fetch(`http://localhost:3001/api/events/${event._id}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-type": "application/json",
+                    },
+                    body: JSON.stringify({ newTitle, newStart, newDuration })
+                });
+                if (res.ok) {
+                    router.push("/");
+                } else { throw new Error("Failed to update event"); }
             
-        } catch (error) {
-           console.log(error) 
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 
     const durationChange = (e) => {
-        let dur = e.target.value;
-        if ((newStart + dur) > 540) {
-            dur = 480 - start;
-        }
-        setNewDuration(dur);
+      setNewDuration(e.target.value);
     };
       const hoursChange = (e) => {
         setHours(e.target.value);
@@ -76,12 +83,15 @@ export default function EditEventForm({ event}) {
         setMinutes(e.target.value);
     }; 
     return (
+        <>
         <form onSubmit={handleSubmit}>
+            <h3 className='form__title'>Let's edit event...</h3>
             <Box
                 sx={{
                     height: '44px',
                     width: '700px',
                     fontSize: '14px',
+                    marginBottom: '25px',
                 }}
                 noValidate
                 autoComplete="off"
@@ -97,6 +107,8 @@ export default function EditEventForm({ event}) {
                 />
             </Box>
 
+            <h4 className='form__title--params'>Change event duration</h4>
+
             <Slider
                 aria-label="Duration"
                 value={newDuration}
@@ -111,6 +123,7 @@ export default function EditEventForm({ event}) {
                     fontSize: '20px',
                     }}
             />
+             <h4 className='form__title--params'>Select event start</h4>
               <FormControl sx={{ m: 1, minWidth: 80  }}>
                 <InputLabel id="demo-simple-select-autowidth-label">Hours</InputLabel>
                 <Select
@@ -123,7 +136,8 @@ export default function EditEventForm({ event}) {
                     sx={{
                     width: '80px',
                     fontSize: '20px',
-                    marginRight: '10px'
+                        marginRight: '10px',
+                    height: '50px',
                     }}
                     
                 >
@@ -146,7 +160,8 @@ export default function EditEventForm({ event}) {
                     sx={{
                     width: '80px',
                     fontSize: '20px',
-                    marginRight: '10px'
+                    marginRight: '10px',
+                    height: '50px',
                     }}
                 >
                     {minArray.map((i) => (
@@ -156,10 +171,11 @@ export default function EditEventForm({ event}) {
                         ))}
                 </Select>
             </FormControl>
-     
-            <Button variant="outlined" type="submit">Save event</Button>
-             {event && event._id && <RemoveBtn id={`${event._id}`} />}
-
-    </form>
+            <div className="buttons__container">
+                <Button variant="outlined" type="submit" sx={{marginRight: '10px',}}>Save event</Button>
+                {event && event._id && <RemoveBtn id={`${event._id}`} />}
+            </div>
+        </form>
+     </>
     )
 }

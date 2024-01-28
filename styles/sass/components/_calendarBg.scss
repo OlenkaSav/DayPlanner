@@ -10,9 +10,29 @@
 
 .bg__minutes{
   display: flex;
-    height: 20px;
+    height: 10px;
     max-width: 550px;
 }
+
+.bg__minutes--line{
+  position: relative;
+  display: flex;
+    height: 10px;
+    max-width: 550px;
+}
+
+.bg__minutes--line::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 30; 
+  height: 1px;
+  background-color: #9b9b9d;
+}
+
+
 .bg__sell{
   max-width: 496px;
   width: 100%;
@@ -20,6 +40,12 @@
 }
 .bg__span{
   width: 40px;
+  text-align: center;
+}
+.bg__span--small{
+  width: 40px;
+  text-align: center;
+  font-size: 12px;
 }
 .bg__div{
   // border: 1px grey solid;
@@ -35,7 +61,7 @@ background: rgb(204, 206, 204);
 height: 100%;
 width: 100%;
 color: rgb(56, 55, 53);
-padding-left: 8px;
+
 // white-space: nowrap; 
   // overflow: hidden; 
 //   text-overflow: ellipsis; 
@@ -52,11 +78,13 @@ padding-left: 8px;
 .bg__div--title{
   position: relative;
   z-index: 20;
-  width: inherit;
+  // width: inherit;
   white-space: nowrap; 
   overflow: hidden; 
   text-overflow: ellipsis;
+  margin-left: 8px;
 }
+
 
 
 // .bg__wrapper .bg__minutes:nth-child(2),

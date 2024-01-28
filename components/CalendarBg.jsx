@@ -29,6 +29,7 @@ export default function CalendarBg() {
         getEvents();
     }, []);
 
+ 
     let layoutData = []
     let startH = 8;
     
@@ -50,11 +51,11 @@ export default function CalendarBg() {
         layoutData.push({key: i, lable: time})
     }
 
+    
+    const sellWidth = 496;
     function renderSell(slot) {
-       const events = data.filter(item => (item.start <= slot && (item.start + item.duration) > slot)).sort((a, b)=> a.start-b.start);
-       
+        const events = data.filter(item => (item.start <= slot && (item.start + item.duration) > slot)).sort((a, b)=> a.start-b.start);
         const eventsFull = [...events];
-        // console.log(eventsFull)
         events.map(event => {
             for (let i = 0; i < data.length; i++) {
                 if (event._id !== data[i]._id && slot < data[i].start && (event.start + event.duration) > data[i].start)
@@ -67,33 +68,16 @@ export default function CalendarBg() {
                
             }
         })
-
             
         if (!!events.length) {
-            return (eventsFull.map(item => (item._id ?
-                (<Link key={item._id} href={`/editEvent/${item._id}`} className='bg__div--event'>
-                    <h2 style={{position: 'relative', zIndex: 20}} className='bg__div--title' >{slot === item.start && item.title}</h2>
+            return (eventsFull.map((item, index) => (item._id ?
+                (<Link key={item._id} href={`/editEvent/${item._id}`} className='bg__div--event' style={{ width: sellWidth/eventsFull.length}}>
+                    <h2 style={{position: 'relative', zIndex: 20}} className='bg__div--title' style={{ width: (sellWidth/eventsFull.length)}}>{slot === item.start && item.title}</h2>
                 </Link>)
-            : (<div key={slot} className="bg__div"></div>)
+            : (<div key={`${slot}+${index}`} className="bg__div"></div>)
             )));
-        } else {return (<div key={slot} className="bg__div"></div>)}
-        
-            
-           
-        //    ? (
-        //                     data
-        //                     .filter(all => (all.start <= container.key && (all.start + all.duration) >= container.key))
-        //                     .map(item => (
-        //                         <div key={item._id} className="bg__div--event">
-        //                         {container.key===item.start ? `${item.title}`: ''}
-        //                         </div>
-        //                     ))
-        //                 ) : (
-        //                 <div key={container.key} className="bg__div"></div>
-        //                 )
-        
+        } else {return (<div key={slot} className="bg__div" ></div>)}
     }
-
     return (
         <>
             <div className="bg__wrapper">
@@ -103,26 +87,15 @@ export default function CalendarBg() {
                     height={100} 
                     width={100} 
                     timeout={3000}  
-                    style={{position: 'absolute',  top: '500px'}}
+                    style={{position: 'absolute',  top: '50%', left: '50%', tranform: 'translate(-50%, -50%)', zIndex: '100'}}
                 />  }
                 
                 {layoutData.map((container) => (
-                    <div key={container.key} className="bg__minutes">
-                        <span className="bg__span">{container.lable}</span>
+                    <div key={container.key} className={` ${container.key%60===0 ? 'bg__minutes--line' : 'bg__minutes'} `}>
+                        <span className={` ${(container.key+30) % 60 === 0 ? 'bg__span--small' : 'bg__span'} `}>{container.lable}</span>
                         <div className="bg__sell">
                             {renderSell(container.key)}
-                            </div>
-                        {/* {!!data.filter(item => (item.start <= container.key && (item.start + item.duration) >= container.key)).length ? (
-                            data
-                            .filter(all => (all.start <= container.key && (all.start + all.duration) >= container.key))
-                            .map(item => (
-                                <div key={item._id} className="bg__div--event">
-                                {container.key===item.start ? `${item.title}`: ''}
-                                </div>
-                            ))
-                        ) : (
-                        <div key={container.key} className="bg__div"></div>
-                        )}  */}
+                        </div>
                     </div>
                 ))} 
       
