@@ -28,7 +28,7 @@
   left: 0;
   width: 100%;
   z-index: 30; 
-  height: 1px;
+  height: 0.5px;
   background-color: #9b9b9d;
 }
 
@@ -48,7 +48,6 @@
   font-size: 12px;
 }
 .bg__div{
-  // border: 1px grey solid;
   height: 100%;
   background: rgb(242, 242, 243);
   width: 100%;
@@ -57,14 +56,11 @@
 }
 .bg__div--event{
   position: relative;
-background: rgb(204, 206, 204);
-height: 100%;
-width: 100%;
-color: rgb(56, 55, 53);
-
-// white-space: nowrap; 
-  // overflow: hidden; 
-//   text-overflow: ellipsis; 
+  background: rgb(204, 206, 204);
+  height: 100%;
+  width: 100%;
+  color: rgb(56, 55, 53);
+  text-overflow: ellipsis; 
 }
 .bg__div--event::before {
   content: '';
@@ -84,12 +80,3 @@ color: rgb(56, 55, 53);
   text-overflow: ellipsis;
   margin-left: 8px;
 }
-
-
-
-// .bg__wrapper .bg__minutes:nth-child(2),
-// .bg__wrapper .bg__minutes:nth-child(4) {
-//   // grid-row: span 3; /* Объединение на 2 колонки */
-//   background: red;
-//   grid-row: span 3;
-// }

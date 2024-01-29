@@ -1,6 +1,8 @@
 import '../styles/sass/style.scss'
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Provider } from 'react-redux';
+import store from '../redux/store';
 import Head from 'next/head'
 import {Open_Sans} from 'next/font/google'
 
@@ -15,7 +17,7 @@ const opensans = Open_Sans({
 
 function MyApp({Component, pageProps}) {
     return (
-       
+       <Provider store={store}>
             <div>
                 <style jsx global>{`
                     :root {
@@ -37,7 +39,7 @@ function MyApp({Component, pageProps}) {
                     theme="light"/>
             </div>
     
-
+        </Provider>
     )
 }
 

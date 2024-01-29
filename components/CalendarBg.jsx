@@ -3,11 +3,16 @@ import { useState, useEffect } from 'react';
 import Link from "next/link"
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"; 
+import { useDispatch } from 'react-redux';
+import { updateData } from '../redux/slices/dataSlice';
+import ExportButton from './ExportButton';
 
 
 export default function CalendarBg() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const getEvents = async () => {
@@ -20,6 +25,7 @@ export default function CalendarBg() {
                 const {events } = await res.json();
                 // console.log(events)
                 setData([...events]);
+                dispatch(updateData(events));
             } catch (error) {
                 console.error(error);
             }
@@ -78,8 +84,10 @@ export default function CalendarBg() {
             )));
         } else {return (<div key={slot} className="bg__div" ></div>)}
     }
+
     return (
         <>
+            <ExportButton />
             <div className="bg__wrapper">
                 {loading && <Loader 
                     type="Puff"
