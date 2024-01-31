@@ -1,15 +1,19 @@
-import EventList from '@/components/EventList';
-import ToolsPanel from '@/components/ToolsPanel';
-import React, { useEffect } from 'react';
-import CalendarBg from '@/components/CalendarBg';
+import React from 'react';
+import Calendar from '@/components/Calendar';
+import UserInfo from '@/components/UserInfo';
+import ToolsPanel from '../components/ToolsPanel';
+import SignIn from './signIn';
+
 
 const HomePage = (props) => {
     
 
     return (
         <div>
-            <CalendarBg/>
-            {/* <EventList/> */}
+            <ToolsPanel />
+            <SignIn/>
+            {/* <UserInfo/>
+            <Calendar/> */}
         </div>
     )
 };

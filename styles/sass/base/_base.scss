@@ -22,17 +22,12 @@ body {
     background-color: $body-bg-color;
     font-size: 15px;
     overflow-x: unset;
-    // font-size: calc-rem-value(15);
-
-  
 }
 
 p {
     font-size: 16px;
     color: $body-color;
-    line-height: 1.8em;
-    // margin: 0;
-    
+    line-height: 1.8em;    
 }
 
 h1,
@@ -54,7 +49,6 @@ ul {
 
 a {
     text-decoration: none;
-    // @include transition-time(0.2s);
 }
 
 a:hover {

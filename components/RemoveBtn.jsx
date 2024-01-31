@@ -9,7 +9,7 @@ export default function RemoveBtn({ id }) {
 
     const handleConfirmation = async (event) => {
        event.preventDefault();
-    const res = await fetch(`http://localhost:3001/api/events?id=${id}`, {
+    const res = await fetch(`http://localhost:3000/api/events?id=${id}`, {
       method: "DELETE",
     });
 
@@ -23,7 +23,9 @@ export default function RemoveBtn({ id }) {
     toast.info(
       <div>
         <p>Are you sure?</p>
-        <button onClick={(event) => handleConfirmation(event)}>Yes</button>
+            <button onClick={(event) => handleConfirmation(event)} style={{ width: '60px', height: '35px', border: '1px black solid', borderRadius: '5px', fontSize: '14px' }}>
+                Yes
+            </button>
       </div>,
     );
   };

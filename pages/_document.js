@@ -1,5 +1,4 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import ToolsPanel from '../components/ToolsPanel';
 
 class MyDocument extends Document {
   render() {
@@ -8,7 +7,6 @@ class MyDocument extends Document {
         <Head />
         <body>
           <div className='container'>
-            <ToolsPanel />
             <Main />
           </div>
           <NextScript />

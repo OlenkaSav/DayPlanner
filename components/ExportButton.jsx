@@ -13,7 +13,7 @@ const ExportButton = () => {
   return (
     <>
       {calendarData.length && (
-        <button onClick={() => handleExportClick(calendarData)} className="tools-panel__action export" type="button">
+        <button onClick={() => handleExportClick(calendarData)} className="tools-panel__action" type="button">
           Export
         </button>)
       }

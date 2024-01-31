@@ -4,7 +4,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 import Head from 'next/head'
-import {Open_Sans} from 'next/font/google'
+import { Open_Sans } from 'next/font/google'
+
+import { NextAuthProvider } from './../app/Providers';
 
 
 const opensans = Open_Sans({
@@ -13,11 +15,10 @@ const opensans = Open_Sans({
     variable: '--base-font',
 })
 
-
-
 function MyApp({Component, pageProps}) {
     return (
-       <Provider store={store}>
+        <NextAuthProvider>
+            <Provider store={store}>
             <div>
                 <style jsx global>{`
                     :root {
@@ -39,7 +40,8 @@ function MyApp({Component, pageProps}) {
                     theme="light"/>
             </div>
     
-        </Provider>
+            </Provider>
+            </NextAuthProvider>
     )
 }
 

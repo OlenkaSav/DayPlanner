@@ -15,7 +15,7 @@ useEffect(() => {
   const getEventById = async (id) => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:3001/api/events/${id}`, {
+      const res = await fetch(`http://localhost:3000/api/events/${id}`, {
         cache: "no-store",
       });
 

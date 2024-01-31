@@ -32,7 +32,6 @@ export default function AddEvent() {
       if ((start + duration) > 540) {
         setDuration((prev) => {
       const newDuration = 540 - start;
-      console.log(newDuration); // Новое значение
       return newDuration;
     });
         }
@@ -41,7 +40,7 @@ export default function AddEvent() {
         } else {
       
             try {
-                const res = await fetch("http://localhost:3001/api/events/", {
+                const res = await fetch("http://localhost:3000/api/events/", {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json",

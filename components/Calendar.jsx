@@ -1,4 +1,3 @@
-import EventList from '@/components/EventList';
 import { useState, useEffect } from 'react';
 import Link from "next/link"
 import Loader from "react-loader-spinner";
@@ -8,7 +7,7 @@ import { updateData } from '../redux/slices/dataSlice';
 import ExportButton from './ExportButton';
 
 
-export default function CalendarBg() {
+export default function Calendar() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -18,12 +17,11 @@ export default function CalendarBg() {
         const getEvents = async () => {
             setLoading(true);
             try {
-                const res = await fetch("http://localhost:3001/api/events", { cache: "no-store" });
+                const res = await fetch("http://localhost:3000/api/events", { cache: "no-store" });
                 if (!res.ok) {
                     throw new Error("Failed fetch");
                 }
                 const {events } = await res.json();
-                // console.log(events)
                 setData([...events]);
                 dispatch(updateData(events));
             } catch (error) {
@@ -87,7 +85,6 @@ export default function CalendarBg() {
 
     return (
         <>
-            <ExportButton />
             <div className="bg__wrapper">
                 {loading && <Loader 
                     type="Puff"
@@ -95,7 +92,7 @@ export default function CalendarBg() {
                     height={100} 
                     width={100} 
                     timeout={3000}  
-                    style={{position: 'absolute',  top: '50%', left: '50%', tranform: 'translate(-50%, -50%)', zIndex: '100'}}
+                    style={{position: 'absolute',  top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: '100'}}
                 />  }
                 
                 {layoutData.map((container) => (
@@ -106,9 +103,7 @@ export default function CalendarBg() {
                         </div>
                     </div>
                 ))} 
-      
             </div>
-
         </>
     )
 }

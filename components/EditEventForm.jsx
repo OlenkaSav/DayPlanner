@@ -22,8 +22,7 @@ export default function EditEventForm({ event}) {
     const [hours, setHours] = useState(8);
     const [minutes, setMinutes] = useState(0);
     const [newStart, setNewStart] = useState(0);
-    const [loading, setLoading] = useState(false);
-  
+      
     useEffect(() => {
         if (event) {
             setNewTitle(event.title);
@@ -56,7 +55,7 @@ export default function EditEventForm({ event}) {
         } else {
         
             try {
-                const res = await fetch(`http://localhost:3001/api/events/${event._id}`, {
+                const res = await fetch(`http://localhost:3000/api/events/${event._id}`, {
                     method: "PUT",
                     headers: {
                         "Content-type": "application/json",
@@ -74,12 +73,12 @@ export default function EditEventForm({ event}) {
     }
 
     const durationChange = (e) => {
-      setNewDuration(e.target.value);
+        setNewDuration(e.target.value);
     };
-      const hoursChange = (e) => {
+    const hoursChange = (e) => {
         setHours(e.target.value);
     }; 
-         const minutesChange = (e) => {
+    const minutesChange = (e) => {
         setMinutes(e.target.value);
     }; 
     return (
@@ -136,7 +135,7 @@ export default function EditEventForm({ event}) {
                     sx={{
                     width: '80px',
                     fontSize: '20px',
-                        marginRight: '10px',
+                    marginRight: '10px',
                     height: '50px',
                     }}
                     
