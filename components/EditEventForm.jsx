@@ -35,8 +35,14 @@ export default function EditEventForm({ event}) {
 
      useEffect(() => {
         const startTime = (hours*60 + minutes) - 8*60
-        setNewStart(startTime);
-     }, [hours, minutes]); 
+         setNewStart(startTime);
+        if ((newStart + newDuration) > 540) {
+            setNewDuration((prev) => {
+            const newDuration = 540 - newStart;
+            return newDuration;
+        });
+        }
+     }, [hours, minutes, newStart, newDuration]); 
     
     const router = useRouter();
     const minArray = Array.from({ length: 12 }, (_, index) => index * 5);
@@ -84,7 +90,7 @@ export default function EditEventForm({ event}) {
     return (
         <>
         <form onSubmit={handleSubmit}>
-            <h3 className='form__title'>Let's edit event...</h3>
+            <h3 className='form__title'>Let&apos;s edit event...</h3>
             <Box
                 sx={{
                     height: '44px',

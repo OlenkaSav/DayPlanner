@@ -5,6 +5,7 @@ const eventSchema = new Schema(
         title: String,
         start: Number,
         duration: Number,
+        user: String,
     },
     { timestamps: true, }
 

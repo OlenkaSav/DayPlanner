@@ -4,7 +4,7 @@ import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"; 
 import { useDispatch } from 'react-redux';
 import { updateData } from '../redux/slices/dataSlice';
-import ExportButton from './ExportButton';
+import { useSelector } from 'react-redux';
 
 
 export default function Calendar() {
@@ -12,26 +12,29 @@ export default function Calendar() {
     const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
+    const userEmail = useSelector((state) => state.user.user)?.split('@')[0];
 
     useEffect(() => {
         const getEvents = async () => {
-            setLoading(true);
-            try {
-                const res = await fetch("http://localhost:3000/api/events", { cache: "no-store" });
-                if (!res.ok) {
-                    throw new Error("Failed fetch");
+                setLoading(true);
+                try {
+                    const res = await fetch(`http://localhost:3000/api/events/user/${userEmail}`, { cache: "no-store" });
+                    if (!res.ok) {
+                        throw new Error("Failed fetch");
+                    }
+                    const { events } = await res.json();
+                    setData([...events]);
+                    dispatch(updateData(events));
+                } catch (error) {
+                    console.error(error);
                 }
-                const {events } = await res.json();
-                setData([...events]);
-                dispatch(updateData(events));
-            } catch (error) {
-                console.error(error);
-            }
-            setLoading(false);
-        };
-
+                setLoading(false);
+            };
+    
+           if (userEmail) {
         getEvents();
-    }, []);
+    }
+    }, [userEmail, dispatch]);
 
  
     let layoutData = []
@@ -62,10 +65,14 @@ export default function Calendar() {
         const eventsFull = [...events];
         events.map(event => {
             for (let i = 0; i < data.length; i++) {
-                if (event._id !== data[i]._id && slot < data[i].start && (event.start + event.duration) > data[i].start)
+                if (event._id !== data[i]._id &&
+                    (slot < data[i].start && (event.start + event.duration) > data[i].start) || 
+                    (slot >= (data[i].start + data[i].duration) && (event.start + event.duration) > (data[i].start + data[i].duration) && event.start<data[i].start )
+                )
                 { eventsFull.push({}) }
                 else if (
-                   event._id !== data[i]._id && slot >= (data[i].start + data[i].duration) &&  (event.start <= data[i].start))
+                    event._id !== data[i]._id && slot >= (data[i].start + data[i].duration) &&
+                    (event.start < (data[i].start + data[i].duration) && event.start >= data[i].start))
                 {
                     eventsFull.unshift({}) 
                 }

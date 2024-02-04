@@ -9,8 +9,10 @@ import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ToolsPanel from '@/components/ToolsPanel';
 
 export default function AddEvent() {
     const [title, setTitle] = useState('');
@@ -19,33 +21,43 @@ export default function AddEvent() {
     const [minutes, setMinutes] = useState(0);
     const [start, setStart] = useState(0)
 
+    const userEmail = useSelector((state) => state.user.user)?.split('@')[0];
+    // console.log(userEmail)
+    
      useEffect(() => {
         const startTime = (hours*60 + minutes) - 8*60
-        setStart(startTime);
-     }, [hours, minutes]); 
+         setStart(startTime);
+        if ((start + duration) > 540) {
+            setDuration((prev) => {
+            const newDuration = 540 - start;
+            return newDuration;
+        });
+        }
+     }, [hours, minutes, duration, start]); 
     
     const router = useRouter();
     const minArray = Array.from({ length: 12 }, (_, index) => index * 5);
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
-      if ((start + duration) > 540) {
-        setDuration((prev) => {
-      const newDuration = 540 - start;
-      return newDuration;
-    });
-        }
+    //   if ((start + duration) > 540) {
+    //     setDuration((prev) => {
+    //   const newDuration = 540 - start;
+    //   return newDuration;
+    // });
+    //     }
         if (!title) {
             toast("Type something in title field...");
         } else {
       
             try {
+                console.log(userEmail)
                 const res = await fetch("http://localhost:3000/api/events/", {
                     method: "POST",
                     headers: {
                         "Content-type": "application/json",
                     },
-                    body: JSON.stringify({ title, start, duration })
+                    body: JSON.stringify({ title, start, duration, userEmail })
                 });
                 if (res.ok) {
                     router.push('/');
@@ -61,15 +73,17 @@ export default function AddEvent() {
     const durationChange = (event) => {
       setDuration(event.target.value);
     };
-      const hoursChange = (event) => {
+    const hoursChange = (event) => {
         setHours(event.target.value);
     }; 
-         const minutesChange = (event) => {
+    const minutesChange = (event) => {
         setMinutes(event.target.value);
     }; 
     return (
+        <>
+        <ToolsPanel/>
         <form onSubmit={handleSubmit} className="form__container">
-            <h3 className='form__title'>Let's create event...</h3>
+            <h3 className='form__title'>Let`s create event...</h3>
             <Box
                 sx={{
                     height: '44px',
@@ -162,6 +176,7 @@ export default function AddEvent() {
      
             
 
-      </form>
+            </form>
+        </>
     );
 }

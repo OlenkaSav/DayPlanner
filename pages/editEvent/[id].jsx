@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import EditEventForm from '@/components/EditEventForm';
+import ToolsPanel from '@/components/ToolsPanel';
 import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"; 
 
@@ -46,6 +47,7 @@ useEffect(() => {
             style={{position: 'absolute',  top: '50%', left: '50%', tranform: 'translate(-50%, -50%)', zIndex: '100'}}
             /> 
       }
+      <ToolsPanel/>
       <EditEventForm event={singleEvent} />
     </>
     

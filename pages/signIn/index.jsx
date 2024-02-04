@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 
 export default function SignIn() {
   const router = useRouter();
-  const [error, setError] = useState("");
+//   const [error, setError] = useState("");
   const { data: session, status: sessionStatus } = useSession();
 
   useEffect(() => {
@@ -13,7 +13,9 @@ export default function SignIn() {
       router.replace("/schedule");
     }
   }, [sessionStatus, router]);
-    return (
+  return (
+      <div className="signIn__container">
         <SignInBtn />
+      </div>
     )
 }
