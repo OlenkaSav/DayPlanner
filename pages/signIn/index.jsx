@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 
 export default function SignIn() {
   const router = useRouter();
-//   const [error, setError] = useState("");
   const { data: session, status: sessionStatus } = useSession();
 
   useEffect(() => {

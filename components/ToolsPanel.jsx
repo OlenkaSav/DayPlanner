@@ -7,7 +7,7 @@ import ExportButton from "./ExportButton";
 import { useRouter } from "next/navigation";
 import { useDispatch } from 'react-redux';
 import { setUser, clearUser } from '../redux/slices/userSlice';
-import { clearData} from '../redux/slices/dataSlice';
+import { resetData} from '../redux/slices/dataSlice';
 
 export default function ToolsPanel() {
     const { status, data } = useSession();
@@ -18,7 +18,7 @@ export default function ToolsPanel() {
     const handleSignOut = () => {
     signOut();
         dispatch(clearUser());
-        dispatch(clearData())
+        dispatch(resetData())
     
   };
 
@@ -29,17 +29,6 @@ export default function ToolsPanel() {
     } else {router.replace('/');}
   }, [status, data, dispatch, router]);
 
-    // const handleSignOut = () => {
-    //     signOut();
-    // // router.replace("/");
-    // };
-    // useEffect(() => {
-    //     if (status !== 'authenticated') {
-    //     router.replace("/");
-    // }
-        
-    // }, [status, router]);
-   
     return (
         <nav className="tools-panel">
             <Link href={"/"} className="tools-panel__home">MyDay</Link>
@@ -52,8 +41,6 @@ export default function ToolsPanel() {
                 }
                 {status === 'authenticated' ? (<button className="tools-panel__action" onClick={handleSignOut}>Sign out</button>)
                     : (<button className="tools-panel__action" onClick={() => signIn('google')}>Sign in</button>)}
-                
-                
             </div>
         </nav>
      )

@@ -18,7 +18,7 @@ export default function Calendar() {
         const getEvents = async () => {
                 setLoading(true);
                 try {
-                    const res = await fetch(`http://localhost:3000/api/events/user/${userEmail}`, { cache: "no-store" });
+                    const res = await fetch(`http://localhost:3000/api/events/`, { cache: "no-store" });
                     if (!res.ok) {
                         throw new Error("Failed fetch");
                     }

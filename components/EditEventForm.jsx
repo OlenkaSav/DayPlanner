@@ -52,7 +52,6 @@ export default function EditEventForm({ event}) {
         if ((newStart + newDuration) > 540) {
             setNewDuration((prev) => {
                 const newDuration = 540 - newStart;
-                console.log(newDuration); 
                 return newDuration;
             });
         }

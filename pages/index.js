@@ -12,8 +12,6 @@ const HomePage = (props) => {
         <div>
             <ToolsPanel />
             <SignIn/>
-            {/* <UserInfo/>
-            <Calendar/> */}
         </div>
     )
 };
